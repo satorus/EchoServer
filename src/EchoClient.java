@@ -17,7 +17,17 @@ public class EchoClient {
 		int port = 5678;
 		String ip = "127.0.0.1";
 		
-		if(args.length == 1){
+		String[] argsSplit = args[0].split(":");
+		
+		if(!argsSplit[0].isEmpty()){
+			ip = argsSplit[0];
+		}
+		
+		if(!argsSplit[1].isEmpty()){
+			port = Integer.parseInt(argsSplit[1]);
+		}
+		
+		/*if(args.length == 1){
 			if(args[0].startsWith(":")){
 				port = Integer.parseInt(args[0].substring(1));
 			}
@@ -29,7 +39,7 @@ public class EchoClient {
 		if(args.length == 2){
 			ip = args[0];
 			port = Integer.parseInt(args[1]);
-		}
+		} */
 		
 		Socket socket = new Socket(ip,port);
 		
