@@ -17,14 +17,16 @@ public class EchoClient {
 		int port = 5678;
 		String ip = "127.0.0.1";
 		
-		String[] argsSplit = args[0].split(":");
+		if(args.length > 0){
+			String[] argsSplit = args[0].split(":");
 		
-		if(!argsSplit[0].isEmpty()){
-			ip = argsSplit[0];
-		}
+			if(argsSplit.length > 0 && !argsSplit[0].isEmpty()){
+				ip = argsSplit[0];
+			}
 		
-		if(!argsSplit[1].isEmpty()){
-			port = Integer.parseInt(argsSplit[1]);
+			if(argsSplit.length > 1 && !argsSplit[1].isEmpty()){
+				port = Integer.parseInt(argsSplit[1]);
+			}
 		}
 		
 		/*if(args.length == 1){
