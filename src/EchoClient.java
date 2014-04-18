@@ -19,7 +19,7 @@ public class EchoClient {
 	/**
 	 * @param args
 	 */
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args){
 		// TODO Auto-generated method stub
 		
 		int port = 5678;
@@ -39,35 +39,37 @@ public class EchoClient {
 			}
 		}
 		
+		try{
+			//-- establish new connection
+			Socket socket = new Socket(ip,port);
 		
-		//-- establish new connection
-		Socket socket = new Socket(ip,port);
+			//-- get In/Out Streams
+			InputStream in =socket.getInputStream();
+			OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream(), "US-ASCII");
+			BufferedReader br = new BufferedReader(new InputStreamReader(System.in));		//bufferedReader for console inputs
+			BufferedReader br2 = new BufferedReader(new InputStreamReader(in));
 		
-		//-- get In/Out Streams
-		InputStream in =socket.getInputStream();
-		OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream(), "US-ASCII");
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));		//bufferedReader for console inputs
-		BufferedReader br2 = new BufferedReader(new InputStreamReader(in));
-		
-		while(true){
-			// read string from console
-			String s = br.readLine();
-			if (s.equals("quit")){
-				//close socket when "quit" was issued
-				in.close();
-				out.close();
-				socket.close();
-				break;
-			}
+			while(true){
+				// read string from console
+				String s = br.readLine();
+				if (s.equals("quit")){
+					//close socket when "quit" was issued
+					in.close();
+					out.close();
+					socket.close();
+					break;
+				}
 			
-			//-- send message to server
-			out.write(s +"\n");
-			out.flush();
+				//-- send message to server
+				out.write(s +"\n");
+				out.flush();
 		
-			//-- receive message from server and print it
-			String s2 = br2.readLine();
-			System.out.println(s2);
-		}
+				//-- receive message from server and print it
+				String s2 = br2.readLine();
+				System.out.println(s2);
+			}
+		
+		} catch(IOException e){};
 		
 		
 	}
