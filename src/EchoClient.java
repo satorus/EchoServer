@@ -5,6 +5,14 @@ import java.io.OutputStreamWriter;
 import java.io.BufferedReader;
 import java.net.Socket;
 
+/*
+ * 
+ * 	An EchoClient to use with EchoServer
+ * 
+ * 	start with java EchoClient [ip]:[port]
+ * 
+ */
+
 
 public class EchoClient {
 
@@ -17,6 +25,8 @@ public class EchoClient {
 		int port = 5678;
 		String ip = "127.0.0.1";
 		
+		
+		//-- parse args[]
 		if(args.length > 0){
 			String[] argsSplit = args[0].split(":");
 		
@@ -29,39 +39,32 @@ public class EchoClient {
 			}
 		}
 		
-		/*if(args.length == 1){
-			if(args[0].startsWith(":")){
-				port = Integer.parseInt(args[0].substring(1));
-			}
-			else{
-				ip = args[0];
-			}
-		}
 		
-		if(args.length == 2){
-			ip = args[0];
-			port = Integer.parseInt(args[1]);
-		} */
-		
+		//-- establish new connection
 		Socket socket = new Socket(ip,port);
 		
+		//-- get In/Out Streams
 		InputStream in =socket.getInputStream();
 		OutputStreamWriter out = new OutputStreamWriter(socket.getOutputStream(), "US-ASCII");
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));		//bufferedReader for console inputs
 		BufferedReader br2 = new BufferedReader(new InputStreamReader(in));
 		
 		while(true){
+			// read string from console
 			String s = br.readLine();
 			if (s.equals("quit")){
+				//close socket when "quit" was issued
 				in.close();
 				out.close();
 				socket.close();
 				break;
 			}
+			
+			//-- send message to server
 			out.write(s +"\n");
 			out.flush();
 		
-		
+			//-- receive message from server and print it
 			String s2 = br2.readLine();
 			System.out.println(s2);
 		}
