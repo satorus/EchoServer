@@ -69,7 +69,7 @@ public class EchoClient {
 				System.out.println(s2);
 			}
 		
-		} catch(IOException e){};
+		} catch(IOException e){System.out.println("connecting not possible. Maybe the ip/port is wrong?");};
 		
 		
 	}
